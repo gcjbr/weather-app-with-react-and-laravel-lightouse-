@@ -1,0 +1,65 @@
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+type Query {
+    forecast(city: String): Forecast
+}
+
+type Location {
+    name: String!
+    country: String!
+    lon: String!
+    lat: String!
+}
+
+type Condition {
+    text: String!
+    icon: String!
+}
+
+type Current {
+    last_updated: String!
+    temp_c: Float!
+    temp_f: Float!
+    condition: Condition
+    wind_kph: String!
+    humidity: String!
+}
+
+type Day {
+    maxtemp_f: Float!
+    maxtemp_c: Float!
+    mintemp_c: Float!
+    mintemp_f: Float!
+    avgtemp_c: Float!
+    avgtemp_f: Float!
+    daily_will_it_rain: Boolean!
+    daily_chance_of_rain: Boolean!
+    daily_will_it_snow: Boolean!
+    daily_chance_of_snow: Boolean!
+    condition: Condition!
+    avghumidity: String!
+    maxwind_kph: String!
+}
+
+type Hour {
+    time: String!
+    temp_c: Float!
+    temp_f: Float!
+    is_day: Boolean!
+    condition: Condition!
+}
+
+type Forecastday {
+    date: Date!
+    day: Day!
+    hour: [Hour]!
+}
+
+type ForecastContainer {
+    forecastday: [Forecastday]
+}
+type Forecast {
+    location: Location!
+    current: Current!
+    forecast: ForecastContainer
+}
